@@ -1,7 +1,9 @@
 package com.example.lab1;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,9 +44,22 @@ public class MainActivity extends AppCompatActivity {
                 String type = getTextCheckedRadioButton(radioGroupTypeProduct);
                 String firm = getTextCheckedRadioButton(radioGroupFirmProduct);
 
-                if(type != "" && firm != "")
+                if (Objects.equals(type, ""))
                 {
-                    textView.setText(type + " " + firm);
+                    CreateAlertDialog("Select type of product");
+                    return;
+                }
+
+                if (Objects.equals(firm, ""))
+                {
+                    CreateAlertDialog("Select firm of product");
+                    return;
+                }
+
+                if(!Objects.equals(type, "") && !Objects.equals(firm, ""))
+                {
+                    String text = type + " " + firm;
+                    textView.setText(text);
                 }
             }
         });
@@ -66,5 +82,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return text;
+    }
+
+    private void CreateAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setMessage(message);
+        builder.setTitle("Warning!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
