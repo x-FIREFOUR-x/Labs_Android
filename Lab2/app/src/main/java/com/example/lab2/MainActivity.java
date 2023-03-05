@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements FragmentPicker.OnFragmentSendDataListener {
 
     private FragmentPicker fragmentPicker;
     private FragmentOutput fragmentOutput;
@@ -21,16 +23,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentPicker = (FragmentPicker) getSupportFragmentManager()
+                .findFragmentById(R.id.frameLayoutPicker);
 
-        fragmentPicker = new FragmentPicker();
-        fragmentTransaction.add(R.id.frameLayout, fragmentPicker);
-        fragmentTransaction.commit();
-
-        fragmentOutput = new FragmentOutput();
-        fragmentTransaction.add(R.id.frameLayout2, fragmentOutput);
-        fragmentTransaction.commit();
+        fragmentOutput = (FragmentOutput) getSupportFragmentManager()
+                .findFragmentById(R.id.frameLayoutOutput);
     }
 
     private void CreateAlertDialog(String message) {
@@ -45,5 +42,26 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onSendData(String dataType, String dateFirm) {
+        if (Objects.equals(dataType, ""))
+        {
+            CreateAlertDialog("Select type of product");
+            return;
+        }
+
+        if (Objects.equals(dateFirm, ""))
+        {
+            CreateAlertDialog("Select firm of product");
+            return;
+        }
+
+        if(!Objects.equals(dataType, "") && !Objects.equals(dateFirm, ""))
+        {
+            String text = dataType + " " + dateFirm;
+            fragmentOutput.setDataTextView(text);
+        }
     }
 }
