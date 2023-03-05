@@ -2,84 +2,35 @@ package com.example.lab2;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RadioGroup radioGroupTypeProduct;
-    private RadioGroup radioGroupFirmProduct;
-
-    private Button buttonOk;
-    private Button buttonCancel;
-
-    private TextView textView;
-
-
+    private FragmentPicker fragmentPicker;
+    private FragmentOutput fragmentOutput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        radioGroupTypeProduct = findViewById(R.id.radioGroupTypeProduct);
-        radioGroupFirmProduct = findViewById(R.id.radioGroupFirmProduct);
-        buttonOk = findViewById(R.id.buttonOk);
-        buttonCancel = findViewById(R.id.buttonCancel);
-        textView = findViewById(R.id.textView);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String type = getTextCheckedRadioButton(radioGroupTypeProduct);
-                String firm = getTextCheckedRadioButton(radioGroupFirmProduct);
+        fragmentPicker = new FragmentPicker();
+        fragmentTransaction.add(R.id.frameLayout, fragmentPicker);
+        fragmentTransaction.commit();
 
-                if (Objects.equals(type, ""))
-                {
-                    CreateAlertDialog("Select type of product");
-                    return;
-                }
-
-                if (Objects.equals(firm, ""))
-                {
-                    CreateAlertDialog("Select firm of product");
-                    return;
-                }
-
-                if(!Objects.equals(type, "") && !Objects.equals(firm, ""))
-                {
-                    String text = type + " " + firm;
-                    textView.setText(text);
-                }
-            }
-        });
-
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textView.setText("");
-            }
-        });
-    }
-
-    private String getTextCheckedRadioButton(RadioGroup radioGroup){
-        String text = "";
-        for (int i = 0; i < radioGroup.getChildCount(); i++) {
-            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
-            if (radioButton.isChecked())
-            {
-                text = radioButton.getText().toString();
-            }
-        }
-        return text;
+        fragmentOutput = new FragmentOutput();
+        fragmentTransaction.add(R.id.frameLayout2, fragmentOutput);
+        fragmentTransaction.commit();
     }
 
     private void CreateAlertDialog(String message) {
