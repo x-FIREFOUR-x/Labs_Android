@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="radioButtonText">Shorts</string>
+    <string name="radioButton2Text">T-shirts</string>
+    <string name="radioButton3Text">Sneakers</string>
+    <string name="radioButton4Text">Nike</string>
+    <string name="radioButton5Text">Adidas</string>
+    <string name="radioButton6Text">Puma</string>
+    <string name="buttonOkText">OK</string>
+    <string name="buttonCancelText">Cancel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
