@@ -1,15 +1,21 @@
 package com.example.lab3;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentPicker.OnFragmentSendDataListener {
+public class MainActivity extends AppCompatActivity implements OnFragmentSendDataListener {
 
     private FragmentPicker fragmentPicker;
     private FragmentOutput fragmentOutput;
@@ -26,11 +32,11 @@ public class MainActivity extends AppCompatActivity implements FragmentPicker.On
                 .findFragmentById(R.id.frameLayoutOutput);
     }
 
-    private void CreateAlertDialog(String message) {
+    private void CreateAlertDialog(String typeMessage, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         builder.setMessage(message);
-        builder.setTitle("Warning!");
+        builder.setTitle(typeMessage);
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
             dialog.cancel();
@@ -44,13 +50,13 @@ public class MainActivity extends AppCompatActivity implements FragmentPicker.On
     public void onSendData(String dataType, String dateFirm) {
         if (Objects.equals(dataType, ""))
         {
-            CreateAlertDialog("Select type of product");
+            CreateAlertDialog( "!Warning", "Select type of product");
             return;
         }
 
         if (Objects.equals(dateFirm, ""))
         {
-            CreateAlertDialog("Select firm of product");
+            CreateAlertDialog("!Warning", "Select firm of product");
             return;
         }
 
@@ -58,6 +64,43 @@ public class MainActivity extends AppCompatActivity implements FragmentPicker.On
         {
             String text = dataType + " " + dateFirm;
             fragmentOutput.setDataTextView(text);
+            saveDataToFile(text);
         }
+    }
+
+    private void saveDataToFile(String data)  {
+        FileOutputStream outputStream;
+        String fileName = getResources().getString(R.string.filename);
+
+        try {
+            outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+            outputStream.write(data.getBytes());
+            outputStream.close();
+            CreateAlertDialog("Ok", "Data successfully saved to file");
+        }catch (Exception e){
+            e.printStackTrace();
+            CreateAlertDialog("!Error", "Failed to save data to file");
+        }
+    }
+
+    @Override
+    public String loadDataWithFile(){
+        String fileName = getResources().getString(R.string.filename);
+        File file = new File(getFilesDir(), fileName);
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            fis.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            CreateAlertDialog("!Error", "Failed to load data with file");
+        }
+        return stringBuilder.toString();
     }
 }

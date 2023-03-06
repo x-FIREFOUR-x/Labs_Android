@@ -14,9 +14,6 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentPicker extends Fragment {
 
-    interface OnFragmentSendDataListener {
-        void onSendData(String dataType, String dateFirm);
-    }
 
     private RadioGroup radioGroupTypeProduct;
     private RadioGroup radioGroupFirmProduct;
