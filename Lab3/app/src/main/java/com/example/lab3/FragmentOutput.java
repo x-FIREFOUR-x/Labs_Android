@@ -48,8 +48,7 @@ public class FragmentOutput extends Fragment {
         buttonOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data = fragmentSendDataListener.loadDataWithFile();
-                textView.setText(data);
+                fragmentSendDataListener.openFileView();
             }
         });
 

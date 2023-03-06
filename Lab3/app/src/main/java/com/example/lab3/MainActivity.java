@@ -2,6 +2,7 @@ package com.example.lab3;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -68,6 +69,19 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSendDat
         }
     }
 
+    @Override
+    public void openFileView() {
+        try {
+            String data = loadDataWithFile();
+            Intent intent = new Intent(MainActivity.this, ViewFileActivity.class);
+            intent.putExtra("Data", data);
+            startActivity(intent);
+        } catch (Exception e) {
+            CreateAlertDialog("!Error", "Failed to load data with file");
+        }
+    }
+
+
     private void saveDataToFile(String data)  {
         FileOutputStream outputStream;
         String fileName = getResources().getString(R.string.filename);
@@ -83,23 +97,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSendDat
         }
     }
 
-    @Override
-    public String loadDataWithFile(){
+    private String loadDataWithFile() throws Exception {
         String fileName = getResources().getString(R.string.filename);
         File file = new File(getFilesDir(), fileName);
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            FileInputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader bufferedReader = new BufferedReader(isr);
+            FileInputStream inputStream = new FileInputStream(file);
+            InputStreamReader reader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            fis.close();
+            inputStream.close();
         }catch (Exception e){
             e.printStackTrace();
-            CreateAlertDialog("!Error", "Failed to load data with file");
+            throw new Exception();
         }
         return stringBuilder.toString();
     }
