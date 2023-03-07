@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSendDat
     public void openFileView() {
         try {
             String data = loadDataWithFile();
+            if (data.equals("")){
+                CreateAlertDialog("!Warning", "File is empty!");
+                return;
+            }
+
             Intent intent = new Intent(MainActivity.this, ViewFileActivity.class);
             intent.putExtra("Data", data);
             startActivity(intent);
