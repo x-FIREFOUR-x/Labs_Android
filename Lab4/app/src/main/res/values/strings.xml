@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lab4</string>
+    <string name="buttonAudioText">Audio</string>
+    <string name="buttonVideoText">Video</string>
+    <string name="buttonCancelText">Cancel</string>
+    <string name="buttonOpenText">Open</string>
+    <string name="filename">dataLab3.txt</string>
+    <string name="buttonBackText">Back</string>
+</resources>
