@@ -17,7 +17,7 @@ public class ViewVideoPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_video_player);
 
-        buttonBack = findViewById(R.id.buttonBackWithVideo);
+        buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

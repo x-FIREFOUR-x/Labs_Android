@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.lab4.audio.ViewAudioPlayer;
+
 
 public class MainActivity extends AppCompatActivity implements ViewController {
 
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements ViewController {
         setContentView(R.layout.activity_main);
 
         fragmentSelector = (FragmentSelector) getSupportFragmentManager()
-                .findFragmentById(R.id.frameLayoutPicker);
+                .findFragmentById(R.id.frame_layout_selector);
     }
 
     private void CreateAlertDialog(String typeMessage, String message) {

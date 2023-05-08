@@ -34,8 +34,8 @@ public class FragmentSelector extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selector, container, false);
 
-        buttonOpenAudioPlayer = view.findViewById(R.id.buttonAudio);
-        buttonOpenVideoPlayer = view.findViewById(R.id.buttonVideo);
+        buttonOpenAudioPlayer = view.findViewById(R.id.button_open_audio);
+        buttonOpenVideoPlayer = view.findViewById(R.id.button_open_video);
 
         buttonOpenAudioPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
