@@ -44,6 +44,8 @@ public class AudioPlayerActivity extends AppCompatActivity {
         previousImageView = findViewById(R.id.previous_image_view);
         nextImageView = findViewById(R.id.next_image_view);
 
+        titleTextView.setSelected(true);
+
         audioList = (ArrayList<AudioData>) getIntent().getSerializableExtra("LIST");
 
         setResourcesWithAudio();
@@ -84,7 +86,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
         long millis = Long.parseLong(duration);
         return String.format("%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
-                TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.HOURS.toSeconds(1)
+                TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1)
         );
     }
 }
