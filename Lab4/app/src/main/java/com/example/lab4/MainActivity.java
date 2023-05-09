@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity{
         super.onStart();
         requestPermission();
 
+        audioList = new ArrayList<>();
+
         String[] projection = {
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.TITLE,
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity{
                 projection, selection, null, null
         );
 
-        audioList = new ArrayList<>();
+
         while (cursor.moveToNext()){
             AudioData audioData = new AudioData(
                     cursor.getString(0),
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity{
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(new AudioListAdapter(audioList, getApplicationContext()));
         }
-
     }
 
 
@@ -125,5 +126,13 @@ public class MainActivity extends AppCompatActivity{
                 .setNegativeButton("Exit", (dialogInterface, i) -> finish())
                 .setCancelable(false)
                 .show();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(recyclerView != null){
+            recyclerView.setAdapter(new AudioListAdapter(audioList, getApplicationContext()));
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.example.lab4.audio;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,12 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
     public void onBindViewHolder(AudioListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AudioData audioData = audioList.get(position);
         holder.titleTextView.setText(audioData.getTitle());
+
+        if(AudioPlayer.getCurrentIndex()==position){
+            holder.titleTextView.setTextColor(Color.parseColor("#FF0000"));
+        }else {
+            holder.titleTextView.setTextColor(Color.parseColor("#000000"));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

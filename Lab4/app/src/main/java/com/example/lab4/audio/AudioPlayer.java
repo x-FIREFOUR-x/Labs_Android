@@ -21,4 +21,12 @@ public class AudioPlayer {
     public static int getCurrentIndex(){
         return currentIndex;
     }
+
+    public static void incrementCurrentIndex(){
+        currentIndex++;
+    }
+
+    public static void decrementCurrentIndex(){
+        currentIndex--;
+    }
 }

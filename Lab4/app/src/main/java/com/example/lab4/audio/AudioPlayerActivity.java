@@ -1,7 +1,9 @@
 package com.example.lab4.audio;
 
 import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lab4.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +29,10 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private ImageView nextImageView;
 
 
-    ArrayList<AudioData> audioList;
-    AudioData currentAudio;
+    private ArrayList<AudioData> audioList;
+    private AudioData currentAudio;
+
+    private MediaPlayer audioPlayer = AudioPlayer.getInstance();
 
 
     @Override
@@ -49,6 +54,38 @@ public class AudioPlayerActivity extends AppCompatActivity {
         audioList = (ArrayList<AudioData>) getIntent().getSerializableExtra("LIST");
 
         setResourcesWithAudio();
+
+        AudioPlayerActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(audioPlayer != null && audioPlayer.isPlaying()){
+                    seekBar.setProgress(audioPlayer.getCurrentPosition());
+                    currentTimeTextView.setText(
+                            convertToMMSS(audioPlayer.getCurrentPosition()+""));
+                }
+                new Handler().postDelayed(this, 100);
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(audioPlayer != null && b){
+                    audioPlayer.seekTo(i);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void setResourcesWithAudio(){
@@ -66,19 +103,45 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
 
     private void playAudio(){
+        audioPlayer.reset();
+        try {
+            audioPlayer.setDataSource(currentAudio.getPath());
+            audioPlayer.prepare();
+            audioPlayer.start();
+            seekBar.setProgress(0);
+            seekBar.setMax(audioPlayer.getDuration());
 
+            pausePlayImageView.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private void playNextAudio(){
+        if(AudioPlayer.getCurrentIndex() == audioList.size() - 1)
+            return;
 
+        AudioPlayer.incrementCurrentIndex();
+        setResourcesWithAudio();
     }
 
     private void playPreviousAudio(){
+        if(AudioPlayer.getCurrentIndex() == 0)
+            return;
 
+        AudioPlayer.decrementCurrentIndex();
+        setResourcesWithAudio();
     }
 
     private void pausePlay(){
-
+        if(audioPlayer.isPlaying()) {
+            audioPlayer.pause();
+            pausePlayImageView.setImageResource(R.drawable.baseline_play_circle_outline_24);
+        }
+        else {
+            audioPlayer.start();
+            pausePlayImageView.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+        }
     }
 
     @SuppressLint("DefaultLocale")
