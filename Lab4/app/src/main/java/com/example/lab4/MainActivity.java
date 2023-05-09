@@ -1,14 +1,22 @@
 package com.example.lab4;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,11 +31,10 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity{
-
     private TextView noSongsTextView;
+    private RecyclerView recyclerView;
 
-    RecyclerView recyclerView;
-    ArrayList<AudioData> audioList = new ArrayList<>();
+    private ArrayList<AudioData> audioList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +44,12 @@ public class MainActivity extends AppCompatActivity{
         noSongsTextView = findViewById(R.id.no_audio_text_view);
 
         recyclerView = findViewById(R.id.audio_recycler_view);
+    }
 
-        if(!checkPermission()){
-            requestPermission();
-            //return;
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestPermission();
 
         String[] projection = {
                 MediaStore.Audio.Media.DATA,
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity{
                 projection, selection, null, null
         );
 
+        audioList = new ArrayList<>();
         while (cursor.moveToNext()){
             AudioData audioData = new AudioData(
                     cursor.getString(0),
@@ -77,34 +86,44 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private boolean checkPermission() {
-        int permission = ContextCompat.checkSelfPermission(
-                MainActivity.this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-        );
 
-        return permission == PackageManager.PERMISSION_GRANTED;
+    private boolean isPermission(){
+        return ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
-        boolean isPermission = ActivityCompat.shouldShowRequestPermissionRationale(
-                MainActivity.this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-        );
-
-        if (isPermission) {
+        if (isPermission()) {
             Toast.makeText(
                     MainActivity.this,
-                    "READ EXTERNAL STORAGE PERMISSION IS REQUIRED, PLEASE ALLOW FROM SETTING",
-                    Toast.LENGTH_LONG
+                    "Audio storage permission allowed.",
+                    Toast.LENGTH_SHORT
             ).show();
-        }
-        else {
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    123
+        } else {
+            ActivityResultLauncher<String> requestPermissionAudio = registerForActivityResult(
+                    new ActivityResultContracts.RequestPermission(),
+                    isGranted -> {if (!isGranted) {
+                        sendToSettingDialog();
+                    }}
             );
+            requestPermissionAudio.launch(Manifest.permission.READ_MEDIA_AUDIO);
         }
+    }
+
+    private void sendToSettingDialog() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Alert for permission")
+                .setMessage("Go to setting and enable audio permissions to use this app")
+                .setPositiveButton("Settings", (dialogInterface, i) -> {
+                    Intent settingsIntent = new Intent();
+                    settingsIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    settingsIntent.setData(uri);
+                    startActivity(settingsIntent);
+                    dialogInterface.dismiss();
+                })
+                .setNegativeButton("Exit", (dialogInterface, i) -> finish())
+                .setCancelable(false)
+                .show();
     }
 }
