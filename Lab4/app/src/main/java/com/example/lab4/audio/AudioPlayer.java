@@ -17,4 +17,8 @@ public class AudioPlayer {
     public static void setCurrentIndex(int index){
         currentIndex = index;
     }
+
+    public static int getCurrentIndex(){
+        return currentIndex;
+    }
 }
