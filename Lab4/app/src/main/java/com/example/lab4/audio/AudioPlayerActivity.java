@@ -3,6 +3,7 @@ package com.example.lab4.audio;
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -62,7 +63,13 @@ public class AudioPlayerActivity extends AppCompatActivity {
                     seekBar.setProgress(audioPlayer.getCurrentPosition());
                     currentTimeTextView.setText(
                             convertToMMSS(audioPlayer.getCurrentPosition()+""));
+
+                    System.out.println(audioPlayer.getCurrentPosition());
                 }
+
+                if(audioPlayer.getCurrentPosition() >= audioPlayer.getDuration() - 100)
+                    playNextAudio();
+
                 new Handler().postDelayed(this, 100);
             }
         });
