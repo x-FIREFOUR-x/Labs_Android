@@ -48,6 +48,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
             public void onClick(View v){
                 AudioPlayer.getInstance().reset();
                 AudioPlayer.setCurrentIndex(position);
+
                 Intent intent = new Intent(context, AudioPlayerActivity.class);
                 intent.putExtra("LIST", audioList);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -63,8 +63,6 @@ public class AudioPlayerActivity extends AppCompatActivity {
                     seekBar.setProgress(audioPlayer.getCurrentPosition());
                     currentTimeTextView.setText(
                             convertToMMSS(audioPlayer.getCurrentPosition()+""));
-
-                    System.out.println(audioPlayer.getCurrentPosition());
                 }
 
                 if(audioPlayer.getCurrentPosition() >= audioPlayer.getDuration() - 100)
