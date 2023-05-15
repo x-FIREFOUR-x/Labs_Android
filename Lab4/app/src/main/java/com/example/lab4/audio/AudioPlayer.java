@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 public class AudioPlayer {
     private static MediaPlayer instance;
 
+    private static boolean continueAudio = false;
+
     public static MediaPlayer getInstance(){
         if (instance == null){
             instance = new MediaPlayer();
@@ -28,5 +30,13 @@ public class AudioPlayer {
 
     public static void decrementCurrentIndex(){
         currentIndex--;
+    }
+
+    public static void setContinueAudio(boolean continueAudio){
+        AudioPlayer.continueAudio = continueAudio;
+    }
+
+    public static boolean getContinueAudio(){
+        return AudioPlayer.continueAudio;
     }
 }

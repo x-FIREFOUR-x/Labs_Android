@@ -54,29 +54,27 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
         audioList = (ArrayList<AudioData>) getIntent().getSerializableExtra("LIST");
 
-        setResourcesWithAudio();
-
         AudioPlayerActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(audioPlayer != null && audioPlayer.isPlaying()){
+                if (audioPlayer != null && audioPlayer.isPlaying()) {
                     seekBar.setProgress(audioPlayer.getCurrentPosition());
                     currentTimeTextView.setText(
-                            convertToMMSS(audioPlayer.getCurrentPosition()+""));
+                            convertToMMSS(audioPlayer.getCurrentPosition() + ""));
                 }
 
-                if(audioPlayer.getCurrentPosition() >= audioPlayer.getDuration() - 100)
+                if (audioPlayer.getCurrentPosition() >= audioPlayer.getDuration() - 100)
                     playNextAudio();
 
                 new Handler().postDelayed(this, 100);
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(audioPlayer != null && b){
+                if (audioPlayer != null && b) {
                     audioPlayer.seekTo(i);
                 }
             }
@@ -91,6 +89,8 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
             }
         });
+
+        setResourcesWithAudio();
     }
 
     private void setResourcesWithAudio(){
@@ -103,23 +103,36 @@ public class AudioPlayerActivity extends AppCompatActivity {
         previousImageView.setOnClickListener(v->playPreviousAudio());
         nextImageView.setOnClickListener(v->playNextAudio());
 
-        playAudio();
+        if (AudioPlayer.getContinueAudio()) {
+            continueAudio();
+        }
+        else {
+            playAudio();
+        }
     }
 
 
     private void playAudio(){
         audioPlayer.reset();
+
         try {
             audioPlayer.setDataSource(currentAudio.getPath());
             audioPlayer.prepare();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
             audioPlayer.start();
             seekBar.setProgress(0);
             seekBar.setMax(audioPlayer.getDuration());
 
             pausePlayImageView.setImageResource(R.drawable.baseline_pause_circle_outline_24);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    }
+
+    private void continueAudio(){
+        seekBar.setProgress(audioPlayer.getCurrentPosition());
+        seekBar.setMax(audioPlayer.getDuration());
+
+        pausePlayImageView.setImageResource(R.drawable.baseline_pause_circle_outline_24);
     }
 
     private void playNextAudio(){

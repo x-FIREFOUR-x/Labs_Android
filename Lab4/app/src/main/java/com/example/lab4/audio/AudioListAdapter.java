@@ -46,9 +46,14 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                AudioPlayer.getInstance().reset();
-                AudioPlayer.setCurrentIndex(position);
+                if(AudioPlayer.getCurrentIndex() == position){
+                    AudioPlayer.setContinueAudio(true);
+                }
+                else{
+                    AudioPlayer.setContinueAudio(false);
+                }
 
+                AudioPlayer.setCurrentIndex(position);
                 Intent intent = new Intent(context, AudioPlayerActivity.class);
                 intent.putExtra("LIST", audioList);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
