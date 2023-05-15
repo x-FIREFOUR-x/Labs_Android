@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".audio.AudioActivity"
+            android:name=".audio.AudioListActivity"
             android:exported="false">
         </activity>
 

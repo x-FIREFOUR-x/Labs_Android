@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#03A9F4"
-    tools:context=".audio.AudioActivity">
+    tools:context=".audio.AudioListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/audio_recycler_view"

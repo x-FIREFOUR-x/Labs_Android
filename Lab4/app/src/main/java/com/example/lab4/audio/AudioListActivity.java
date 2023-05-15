@@ -25,7 +25,7 @@ import com.example.lab4.R;
 import java.io.File;
 import java.util.ArrayList;
 
-public class AudioActivity extends AppCompatActivity {
+public class AudioListActivity extends AppCompatActivity {
 
     private TextView noSongsTextView;
     private RecyclerView recyclerView;
@@ -93,14 +93,14 @@ public class AudioActivity extends AppCompatActivity {
 
 
     private boolean isPermission(){
-        return ContextCompat.checkSelfPermission(AudioActivity.this,
+        return ContextCompat.checkSelfPermission(AudioListActivity.this,
                 Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
         if (isPermission()) {
             Toast.makeText(
-                    AudioActivity.this,
+                    AudioListActivity.this,
                     "Audio storage permission allowed.",
                     Toast.LENGTH_SHORT
             ).show();
@@ -116,7 +116,7 @@ public class AudioActivity extends AppCompatActivity {
     }
 
     private void sendToSettingDialog() {
-        new AlertDialog.Builder(AudioActivity.this)
+        new AlertDialog.Builder(AudioListActivity.this)
                 .setTitle("Alert for permission")
                 .setMessage("Go to setting and enable audio permissions to use this app")
                 .setPositiveButton("Settings", (dialogInterface, i) -> {
