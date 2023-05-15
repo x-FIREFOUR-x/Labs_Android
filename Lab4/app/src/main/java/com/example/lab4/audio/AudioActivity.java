@@ -45,7 +45,8 @@ public class AudioActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AudioPlayer.getInstance().stop();
+        if(AudioPlayer.getInstance().isPlaying())
+            AudioPlayer.getInstance().pause();
         AudioPlayer.setCurrentIndex(-1);
     }
 
