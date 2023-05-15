@@ -3,7 +3,6 @@ package com.example.lab4.audio;
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -133,6 +132,9 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private void continueAudio(){
         seekBar.setProgress(audioPlayer.getCurrentPosition());
         seekBar.setMax(audioPlayer.getDuration());
+
+        if(!audioPlayer.isPlaying())
+            audioPlayer.start();
 
         pausePlayImageView.setImageResource(R.drawable.baseline_pause_circle_outline_24);
     }
