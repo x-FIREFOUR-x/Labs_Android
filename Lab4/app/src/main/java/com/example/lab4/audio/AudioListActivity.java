@@ -35,7 +35,7 @@ public class AudioListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio);
+        setContentView(R.layout.activity_audio_list);
 
         noSongsTextView = findViewById(R.id.no_audio_text_view);
 

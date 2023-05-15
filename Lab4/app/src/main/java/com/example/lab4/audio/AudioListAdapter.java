@@ -29,6 +29,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
     public AudioListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.audio_recycler_item, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -36,6 +37,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
     public void onBindViewHolder(AudioListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AudioData audioData = audioList.get(position);
         holder.titleTextView.setText(audioData.getTitle());
+
+        System.out.println(position);
 
         if(AudioPlayer.getCurrentIndex()==position){
             holder.titleTextView.setTextColor(Color.parseColor("#FF0000"));

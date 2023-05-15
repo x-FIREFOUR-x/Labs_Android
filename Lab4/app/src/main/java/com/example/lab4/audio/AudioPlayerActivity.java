@@ -105,10 +105,12 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
         if (AudioPlayer.getContinueAudio()) {
             continueAudio();
+            AudioPlayer.setContinueAudio(false);
         }
-        else {
+        else{
             playAudio();
         }
+
     }
 
 
@@ -136,18 +138,21 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     private void playNextAudio(){
+        System.out.println(AudioPlayer.getCurrentIndex());
         if(AudioPlayer.getCurrentIndex() == audioList.size() - 1)
-            return;
+            AudioPlayer.setCurrentIndex(0);
+        else
+            AudioPlayer.incrementCurrentIndex();
 
-        AudioPlayer.incrementCurrentIndex();
         setResourcesWithAudio();
     }
 
     private void playPreviousAudio(){
         if(AudioPlayer.getCurrentIndex() == 0)
-            return;
+            AudioPlayer.setCurrentIndex(audioList.size() - 1);
+        else
+            AudioPlayer.decrementCurrentIndex();
 
-        AudioPlayer.decrementCurrentIndex();
         setResourcesWithAudio();
     }
 
