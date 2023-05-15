@@ -1,9 +1,7 @@
 package com.example.lab4.video;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab4.R;
-import com.example.lab4.audio.AudioPlayerActivity;
 
 import java.util.ArrayList;
 
