@@ -38,8 +38,6 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         AudioData audioData = audioList.get(position);
         holder.titleTextView.setText(audioData.getTitle());
 
-        System.out.println(position);
-
         if(AudioPlayer.getCurrentIndex()==position){
             holder.titleTextView.setTextColor(Color.parseColor("#FF0000"));
         }else {

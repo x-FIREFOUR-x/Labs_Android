@@ -138,7 +138,6 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     private void playNextAudio(){
-        System.out.println(AudioPlayer.getCurrentIndex());
         if(AudioPlayer.getCurrentIndex() == audioList.size() - 1)
             AudioPlayer.setCurrentIndex(0);
         else
