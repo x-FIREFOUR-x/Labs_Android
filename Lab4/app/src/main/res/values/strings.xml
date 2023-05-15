@@ -9,9 +9,11 @@
     <string name="audio_item_icon_text">Icon</string>
 
     <string name="audio_title_text">Title of the song</string>
-    <string name="current_time_text">0:00</string>
-    <string name="total_time_text">0:00</string>
 
     <string name="not_found_video_text">Not fount videos</string>
+    <string name="video_title_text">Title of the video</string>
+
+    <string name="current_time_text">0:00</string>
+    <string name="total_time_text">0:00</string>
 
 </resources>

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab4.R;
+import com.example.lab4.audio.AudioPlayerActivity;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                System.out.println(videoData.getTitle());
+
+                Intent intent = new Intent(context, VideoPlayerActivity.class);
+                intent.putExtra("videoName", videoData.getTitle());
+                intent.putExtra("videoPath", videoData.getPath());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
     }
