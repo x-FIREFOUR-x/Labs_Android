@@ -85,10 +85,8 @@ public class AudioListActivity extends AppCompatActivity {
         if(audioList.isEmpty()){
             noSongsTextView.setVisibility(View.VISIBLE);
         }
-        else{
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new AudioListAdapter(audioList, getApplicationContext()));
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new AudioListAdapter(audioList, getApplicationContext()));
     }
 
 
