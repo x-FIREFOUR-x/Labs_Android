@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lab4.audio.AudioListActivity;
 import com.example.lab4.video.VideoListActivity;
+import com.example.lab4.video.VideoSearchActivity;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity{
     Button openAudioButton;
 
     Button openVideoButton;
+
+    Button openSearchVideoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, VideoListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        openSearchVideoButton = findViewById(R.id.open_internet_video_button);
+        openSearchVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, VideoSearchActivity.class);
                 startActivity(intent);
             }
         });

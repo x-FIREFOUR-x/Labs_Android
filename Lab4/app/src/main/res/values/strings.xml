@@ -17,6 +17,9 @@
     <string name="video_title_text">Title of the video</string>
     <string name="video_current_time_text">0:0:00</string>
     <string name="video_total_time_text">0:00:00</string>
+    <string name="button_open_internet_video_text">Open Internet video</string>
+    <string name="link_video_edit_text"> </string>
+    <string name="search_video_button_text">Search</string>
 
 
 </resources>
