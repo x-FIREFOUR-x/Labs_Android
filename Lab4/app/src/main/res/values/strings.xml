@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Lab4</string>
+
+    <string name="button_open_audio_text">Open Audio</string>
+    <string name="button_open_video_text">Open Video</string>
+
+    <string name="not_found_audio_text">Not found songs</string>
+    <string name="audio_item_title_text">Title</string>
+    <string name="audio_item_icon_text">Icon</string>
+
+    <string name="audio_title_text">Title of the song</string>
+    <string name="current_time_text">0:00</string>
+    <string name="total_time_text">0:00</string>
+
+    <string name="not_found_video_text">Not fount videos</string>
+
+    <string name="video_title_text">Title of the video</string>
+    <string name="video_current_time_text">0:0:00</string>
+    <string name="video_total_time_text">0:00:00</string>
+    <string name="button_open_internet_video_text">Open Internet video</string>
+    <string name="link_video_edit_text"> </string>
+    <string name="search_video_button_text">Search</string>
+
+
+</resources>

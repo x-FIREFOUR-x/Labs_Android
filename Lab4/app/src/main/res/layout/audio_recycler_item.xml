@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E6E291"
+    android:layout_marginHorizontal="10dp"
+    android:paddingVertical="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
+
+    <ImageView
+        android:id="@+id/audio_item_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_launcher_background"
+        android:contentDescription="@string/audio_item_icon_text" />
+
+    <TextView
+        android:id="@+id/audio_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/audio_item_icon"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:ellipsize="end"
+        android:text="@string/audio_item_title_text"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
+</RelativeLayout>
